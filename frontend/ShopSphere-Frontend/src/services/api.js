@@ -44,7 +44,7 @@ api.interceptors.response.use((response) => response, (error) => {
     originalRequest._retry = true;
 
     if (!refreshPromise) {
-        refreshPromise = axios.post('/api/auth/refresh', null, { withCredentials: true })
+        refreshPromise = api.post('/auth/refresh')
             .then((response) => {
                 setAccessToken(response.data.accessToken);
                 return response.data.accessToken;
