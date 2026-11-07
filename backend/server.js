@@ -11,7 +11,7 @@ const httpServer = http.createServer(app)
 
 const io = new Server(httpServer,{
     cors:{
-        origin: config.FRONTEND_URI,
+        origin: config.FRONTEND_ORIGINS,
         credentials: true
     }
 })
