@@ -2,6 +2,13 @@ import axios from 'axios'
 import { store } from "../redux/store";
 import { logout, updateAccessToken } from "../redux/feature/authSlice";
 
+export const apiBaseUrl = (
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.DEV
+        ? "http://localhost:3000/api"
+        : "https://mern-full-stack-project-hgsr.onrender.com/api")
+).replace(/\/+$/, "");
+
 let accessToken = null;
 export const setAccessToken = (token) => {
     accessToken = token;
@@ -13,7 +20,7 @@ export const getAccessToken = ()=>{
 }
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: apiBaseUrl,
     withCredentials: true
 })
 

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { register as registerUser } from "../services/authServices";
 import { setCredentials } from "../redux/feature/authSlice";
+import { apiBaseUrl } from "../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
@@ -154,7 +155,7 @@ const Register = () => {
                     {/* GOOGLE SIGN UP - UI ONLY */}
                     <button
                         type="button"
-                        onClick={() => window.location.assign(`${import.meta.env.VITE_API_URL}/auth/google`)}
+                        onClick={() => window.location.assign(`${apiBaseUrl}/auth/google`)}
                         className="w-full flex cursor-pointer items-center justify-center gap-3 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-700 font-semibold py-3.5 rounded-xl transition"
                     >
                         <svg viewBox="0 0 48 48" className="w-5 h-5">
