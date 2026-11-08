@@ -8,7 +8,7 @@ const sentOrderConfirmation = async(user,order)=>{
         throw new Error("Order confirmation recipient email is missing");
     }
 
-    await transporter.sendMail({
+    return transporter.sendMail({
         from: config.EMAIL_USER,
         to: recipient,
         subject: "Order Placed Successfully - ShopSphere",
