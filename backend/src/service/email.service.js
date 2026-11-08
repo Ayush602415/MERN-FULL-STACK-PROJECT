@@ -3,12 +3,16 @@ const transporter = require("../config/mailer");
 
 
 const sentOrderConfirmation = async(user,order)=>{
-    const recipient = user?.email;
+    if (!config.EMAIL_USER || !config.EMAIL_PASS) {
+        throw new Error("Email SMTP credentials are not configured");
+    }
+
+    const recipient = order.shippingAddress?.email || user?.email;
     if (!recipient) {
         throw new Error("Order confirmation recipient email is missing");
     }
 
-    return transporter.sendMail({
+    const info = await transporter.sendMail({
         from: config.EMAIL_USER,
         to: recipient,
         subject: "Order Placed Successfully - ShopSphere",
@@ -22,6 +26,17 @@ const sentOrderConfirmation = async(user,order)=>{
             <p>Thank you for shopping with ShopSphere!</p>
         `
     });
+
+    if (!info.accepted?.length) {
+        throw new Error("SMTP server did not accept the order confirmation email");
+    }
+
+    console.info("Order confirmation email accepted by SMTP", {
+        orderId: String(order._id),
+        messageId: info.messageId
+    });
+
+    return info;
 }
 
 module.exports= sentOrderConfirmation

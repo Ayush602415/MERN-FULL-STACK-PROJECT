@@ -88,6 +88,10 @@ const verifyController = async (req, res) => {
         order.paidAt = new Date()
         await order.save()
 
+        console.info("Razorpay payment verified; sending order confirmation email", {
+            orderId: String(order._id)
+        })
+
         sentOrderConfirmation(order.user, order).catch((emailError) => {
             console.error("Failed to send order confirmation email:", {
                 code: emailError.code,
