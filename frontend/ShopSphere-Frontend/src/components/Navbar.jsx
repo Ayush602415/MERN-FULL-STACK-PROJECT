@@ -11,7 +11,7 @@ import {
     Bell
 } from "lucide-react";
 import { logout as logoutRequest } from "../services/authServices";
-import { logout as clearAuth } from "../services/authServices";
+import { logout as clearAuth } from "../redux/feature/authSlice";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
