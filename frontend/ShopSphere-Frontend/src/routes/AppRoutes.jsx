@@ -18,6 +18,7 @@ import AdminDashboard from "../pages/AdminDashboard";
 import AdminProducts from "../pages/AdminProducts";
 import AdminProductForm from "../pages/AdminProductForm";
 import Users from "../pages/Users";
+import Profile from "../pages/Profile";
 import Notification from "../components/common/Notification";
 
 const HomeRoute = () => {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
             {
                 path: "my-orders",
                 element: <MyOrders />
+            },
+            {
+                path: "profile",
+                element: <Profile />
             },
             {
                 path: "wishlist",

@@ -36,6 +36,7 @@ const Navbar = () => {
         { name: "Home", path: "/home" },
         { name: "Products", path: "/products" },
         { name: "My Orders", path: "/my-orders" },
+        ...(isAuthenticated ? [{ name: "Profile", path: "/profile" }] : []),
         ...(user?.role === "admin"
             ? [{ name: "Dashboard", path: "/admin/dashboard" }]
             : []),

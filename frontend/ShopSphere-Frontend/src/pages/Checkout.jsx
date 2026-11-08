@@ -11,6 +11,7 @@ const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
+  const user = useSelector((state) => state.auth.user);
   const loading = useSelector((state)=>state.order.loading)
   const [submitting, setSubmitting] = useState(false);
   const cartItems = cart?.items || [];
@@ -26,7 +27,7 @@ const Checkout = () => {
 
   const [formData, setFormData] = useState({
     fullName: "",
-    email: "",
+    email: user?.email || "",
     phone: "",
     address: "",
     city: "",
@@ -148,10 +149,12 @@ const Checkout = () => {
                 <input
                   key={name}
                   name={name}
+                  type={name === "email" ? "email" : "text"}
                   value={formData[name]}
                   onChange={handleChange}
                   placeholder={placeholder}
                   required
+                  autoComplete={name === "email" ? "email" : undefined}
                   className="w-full bg-[#222] border border-white/10 rounded-lg px-4 py-3 outline-none focus:border-purple-500"
                 />
               ))}
