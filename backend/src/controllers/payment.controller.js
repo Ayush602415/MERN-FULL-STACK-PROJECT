@@ -88,11 +88,13 @@ const verifyController = async (req, res) => {
         order.paidAt = new Date()
         await order.save()
 
-        try {
-            await sentOrderConfirmation(order.user, order);
-        } catch (emailError) {
-            console.error("Failed to send order confirmation email:", emailError.message);
-        }
+        sentOrderConfirmation(order.user, order).catch((emailError) => {
+            console.error("Failed to send order confirmation email:", {
+                code: emailError.code,
+                responseCode: emailError.responseCode,
+                message: emailError.message
+            });
+        });
 
         return res.status(200).json({
             success: true,

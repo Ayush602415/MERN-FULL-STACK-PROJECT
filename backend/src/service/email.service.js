@@ -15,7 +15,7 @@ const sentOrderConfirmation = async(user,order)=>{
         html: `
             <h2>Order Placed Successfully!</h2>
             <p>Hello ${order.shippingAddress?.fullName || user?.name || "Customer"},</p>
-            <p>Your order has been placed successfully.</p>
+            <p>Your demo order has been placed successfully.</p>
             <h3>Order Details</h3>
             <p>Order ID: ${order._id}</p>
             <p>Total Amount: ₹${order.totalAmount}</p>

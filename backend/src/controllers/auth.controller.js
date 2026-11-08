@@ -155,11 +155,22 @@ const refreshController = async(req,res)=>{
 }
 
 const logoutController = async(req,res)=>{
-   const user = await userModel.findById(req.userId).select("+refreshToken")
-   if(user){
-    user.refreshToken = null
-    await user.save()
-   }
+    const refreshToken = req.cookies.refreshToken
+    if (refreshToken) {
+        try {
+            const decoded = verifyRefreshToken(refreshToken)
+            const user = await userModel.findById(decoded.userId).select("+refreshToken")
+            if (user?.refreshToken === refreshToken) {
+                user.refreshToken = null
+                await user.save()
+            }
+        } catch (error) {
+            if (error.name !== "JsonWebTokenError" && error.name !== "TokenExpiredError" && error.name !== "NotBeforeError") {
+                throw error
+            }
+        }
+    }
+
     res.clearCookie("refreshToken", {
         httpOnly: true,
         secure: isProduction,

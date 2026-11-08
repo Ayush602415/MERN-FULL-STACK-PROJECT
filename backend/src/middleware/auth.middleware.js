@@ -1,15 +1,24 @@
 const { verifyAccessToken } = require("../utils/token.utils");
 
-const authenticate =  (req, res, next) => {
-    const authHeader = req.headers.authorization.split(" ")[1];
-    if (!authHeader) {
+const authenticate = (req, res, next) => {
+    const authorization = req.headers.authorization;
+    if (!authorization) {
         return res.status(401).json({
             message: "Authorization header missing"
         });
     }
 
-    const decoded = verifyAccessToken(authHeader);
-    if (!decoded) {
+    const token = authorization.match(/^Bearer\s+(\S+)$/i)?.[1];
+    if (!token) {
+        return res.status(401).json({
+            message: "Invalid access token"
+        });
+    }
+
+    let decoded;
+    try {
+        decoded = verifyAccessToken(token);
+    } catch {
         return res.status(401).json({
             message: "Invalid access token"
         });

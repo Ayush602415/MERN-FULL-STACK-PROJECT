@@ -12,7 +12,7 @@ router.post("/register",registerValidator,registerController)
 router.post("/login",loginValidator,loginController)
 router.get("/me",authenticate,meController)
 router.post("/refresh",refreshController)
-router.post("/logout",authenticate,logoutController)
+router.post("/logout",logoutController)
 router.get("/google",passport.authenticate("google",{
     scope: ["profile","email"],
     session: false,

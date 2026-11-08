@@ -2,15 +2,15 @@ const dotenv = require("dotenv")
 const path = require("path")
 dotenv.config({ path: path.resolve(__dirname, "../../.env") })
 
+const trimTrailingSlashes = (uri) => uri?.replace(/\/+$/, "")
 const isRender = process.env.RENDER === "true" || Boolean(process.env.RENDER_EXTERNAL_URL)
-const productionFrontendUri = process.env.FRONTEND_URI?.replace(/\/+$/, "")
-const localFrontendUri = (process.env.LOCAL_FRONTEND_URI || "http://localhost:5173").replace(/\/+$/, "")
+const productionFrontendUri = trimTrailingSlashes(process.env.FRONTEND_URI)
+const localFrontendUri = trimTrailingSlashes(process.env.LOCAL_FRONTEND_URI || "http://localhost:5173")
 const frontendUri = isRender ? productionFrontendUri : localFrontendUri
-const backendUri = (
-    isRender
-        ? process.env.RENDER_EXTERNAL_URL || "https://mern-full-stack-project-hgsr.onrender.com"
-        : `http://localhost:${process.env.PORT || 3000}`
-).replace(/\/+$/, "")
+const backendUri = trimTrailingSlashes(
+    process.env.RENDER_EXTERNAL_URL ||
+    (isRender ? "https://mern-full-stack-project-hgsr.onrender.com" : `http://localhost:${process.env.PORT || 3000}`)
+)
 const configuredGoogleCallbackUri = process.env.GOOGLE_CALLBACK_URI
 const googleCallbackUri = isRender && configuredGoogleCallbackUri && !configuredGoogleCallbackUri.includes("localhost")
     ? configuredGoogleCallbackUri
