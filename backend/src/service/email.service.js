@@ -3,7 +3,7 @@ const transporter = require("../config/mailer");
 
 
 const sentOrderConfirmation = async(user,order)=>{
-    const recipient = order.shippingAddress?.email || user?.email;
+    const recipient = user?.email;
     if (!recipient) {
         throw new Error("Order confirmation recipient email is missing");
     }
